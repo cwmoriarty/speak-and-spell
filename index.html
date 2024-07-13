@@ -1,0 +1,99 @@
+
+<body>
+  <div class="centered">
+  <h1>Speak and Spell Alpha 🗣️🔤</h1>
+   <Br>
+    Ask "How do you spell" followed by a word.
+   <div id="result"></div>
+ </div>    
+
+  <div class="libleft" id="info">
+  MassachusettsInstruments
+  </div>
+
+</body>
+
+
+<script>
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        } else if ('SpeechRecognition' in window) {
+        recognition = new SpeechRecognition();
+        } else {
+        document.getElementById('info').textContent = "Speech Recognition not supported in this browser.";
+        }
+    
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[event.results.length - 1][0].transcript.trim();
+            const regex = /how do you spell\s+(\w+)/i;
+            const match = transcript.match(regex);
+
+            if (match) {
+                const word = match[1].toUpperCase();
+                document.getElementById('result').textContent = word;
+            }
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Speech recognition error', event);
+        };
+
+        recognition.onend = () => {
+            recognition.start();
+        };
+
+        recognition.start();
+  
+</script>
+
+
+
+
+<style type="text/css">
+    body { font-family: Helvetica, Geneva, sans-serif; }
+    a { color: black; }
+   
+    #result {
+            font-family: monospace;
+            color: black;
+            display: block;
+            font-size: calc(4vw + 4vh);
+            letter-spacing: 0.4em;
+        }
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  font-size: calc(1vw + 1vh);
+  border: 1px solid black;
+}
+.centered h1
+{ 
+  font-size: calc(2vw + 2vh);
+}
+
+
+@media (max-width: 768px) {
+  .centered {
+    width: 50%;
+    height: 50%;
+    font-size: calc(2vw + 2vh);
+  }
+}
+
+.libleft {
+          position: fixed;
+          left:10; 
+          bottom:10;
+        }
+        </style>
+
+
