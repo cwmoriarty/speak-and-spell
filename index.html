@@ -2,10 +2,11 @@
 <body>
   <div class="centered">
   <h1>Speak and Spell Alpha 🗣️🔤</h1>
-   <Br>
     Ask "How do you spell" followed by a word.
-   <div id="result"></div>
- </div>    
+</div>       
+
+    <div id="resultUpper">WONDERFUL</div>
+    <div id="resultLower">wonderful</div>
 
   <div class="libleft" id="info">
   MassachusettsInstruments
@@ -14,13 +15,18 @@
 </body>
 
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
 <script>
+   // document.getElementById('result').textContent="TESTES"
     if ('webkitSpeechRecognition' in window) {
         recognition = new webkitSpeechRecognition();
         } else if ('SpeechRecognition' in window) {
         recognition = new SpeechRecognition();
         } else {
-        document.getElementById('info').textContent = "Speech Recognition not supported in this browser.";
+        document.getElementById('info').textContent = "⚠️Speech Recognition not supported in this browser.";
         }
     
         recognition.continuous = true;
@@ -33,8 +39,8 @@
             const match = transcript.match(regex);
 
             if (match) {
-                const word = match[1].toUpperCase();
-                document.getElementById('result').textContent = word;
+                document.getElementById('resultUpper').textContent =  match[1].toUpperCase();
+                document.getElementById('resultLower').textContent =  match[1].toLowerCase();
             }
         };
 
@@ -57,23 +63,20 @@
     body { font-family: Helvetica, Geneva, sans-serif; }
     a { color: black; }
    
-    #result {
-            font-family: monospace;
-            color: black;
-            display: block;
-            font-size: calc(4vw + 4vh);
-            letter-spacing: 0.4em;
-        }
+#resultUpper { font-family: "Open Sans"; font-size: 15vw; width: 100%; top: 10%; position: absolute; text-align: center;}
+#resultLower { font-family: "Open Sans"; font-size: 13vw; width: 100%; top: 40%; position: absolute; text-align: center; color:darkblue;}
+
+
 
 .centered {
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   width: 50%;
-  height: 50%;
+  height: 30%;
   font-size: calc(1vw + 1vh);
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 .centered h1
 { 
@@ -90,6 +93,7 @@
 }
 
 .libleft {
+        font-size: large;
           position: fixed;
           left:10; 
           bottom:10;
